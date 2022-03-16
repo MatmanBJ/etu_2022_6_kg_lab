@@ -1,0 +1,6 @@
+# debug folder
+debug/
+# object files, made when the program was compiling
+*.o
+# release folder
+release/
