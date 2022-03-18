@@ -9,7 +9,8 @@
 // ---------- sPoint ----------
 
 sPoint::sPoint(int X, int Y, const sOriginPlane &beginOfCoords)
-: _x(X), _y(Y), origin(beginOfCoords) {}
+: _x(X), _y(Y), origin(beginOfCoords)
+{}
 
 // ---------- sDraw ----------
 
@@ -48,8 +49,14 @@ void sPoint::setY(int new_y)
 
 // ---------- x ----------
 
-int sPoint::x() const {return getX();}
+int sPoint::x() const
+{
+    return getX();
+}
 
 // ---------- y ----------
 
-int sPoint::y() const {return getY();}
+int sPoint::y() const
+{
+    return getY();
+}

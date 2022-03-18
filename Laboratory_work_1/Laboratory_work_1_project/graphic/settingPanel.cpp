@@ -112,16 +112,24 @@ void SettingPanel::check_and_start()
 
     int x01, y01, x02, y02, r1, r2;
     bool is_ok, res_ok = false;
-    x01 = bX1->text().toInt(&is_ok); res_ok += !is_ok;
-    y01 = bY1->text().toInt(&is_ok); res_ok += !is_ok;
-    r1 = bR1->text().toInt(&is_ok); res_ok += !is_ok;
-    x02 = bX2->text().toInt(&is_ok); res_ok += !is_ok;
-    y02 = bY2->text().toInt(&is_ok); res_ok += !is_ok;
-    r2 = bR2->text().toInt(&is_ok); res_ok += !is_ok;
+    x01 = bX1->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    y01 = bY1->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    r1 = bR1->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    x02 = bX2->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    y02 = bY2->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    r2 = bR2->text().toInt(&is_ok);
+    res_ok += !is_ok;
     
     int cb_x, cb_y;
-    cb_x = bShiftX->text().toInt(&is_ok); res_ok += !is_ok;
-    cb_y = bShiftY->text().toInt(&is_ok); res_ok += !is_ok;
+    cb_x = bShiftX->text().toInt(&is_ok);
+    res_ok += !is_ok;
+    cb_y = bShiftY->text().toInt(&is_ok);
+    res_ok += !is_ok;
     res_ok = !res_ok;
 
     if(res_ok != true)
@@ -137,9 +145,9 @@ void SettingPanel::check_and_start()
     }*/
 
     double d = ((double)x01 - (double)x02)*((double)x01 - (double)x02);
-    d += ((double)y01 - (double)y02)*((double)y01 - (double)y02);
-    d = sqrt( d );
-    if( d <= r1 + r2)
+    d = d + ((double)y01 - (double)y02)*((double)y01 - (double)y02);
+    d = sqrt(d);
+    if(d <= r1 + r2)
     {
         ifFailed(string("The point shouldn't be inside the circle or be on the circle"));
         return;

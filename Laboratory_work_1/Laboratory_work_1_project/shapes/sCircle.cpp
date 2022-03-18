@@ -11,15 +11,13 @@
 
 sCircle::sCircle(sPoint center, int R, const sOriginPlane &beginOfCoords)
 : p0(center), r(R), origin(beginOfCoords)
-{
-}
+{}
 
 // ---------- sCircle ----------
 
 sCircle::sCircle(int center_x, int center_y, int R, const sOriginPlane &beginOfCoords)
 : p0(center_x, center_y, beginOfCoords), r(R), origin(beginOfCoords)
-{
-}
+{}
 
 // ---------- sdraw ----------
 
@@ -45,8 +43,14 @@ void sCircle::sdraw(QPainter& qp)
 
 // ---------- getCenter ----------
 
-sPoint sCircle::getCenter() const {return p0;}
+sPoint sCircle::getCenter() const
+{
+    return p0;
+}
 
 // ---------- getR ----------
 
-int sCircle::getR() const {return r;}
+int sCircle::getR() const
+{
+    return r;
+}
