@@ -8,7 +8,7 @@
 #include <sstream>
 //#include <cstring>
 
-#include "../include/sup.h"
+#include "../include_graphic/sup.h"
 #include "../shapes/shapes"
 
 using namespace std;

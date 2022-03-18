@@ -8,7 +8,7 @@
 #include <QWidget>
 #include <QPainter>
 
-#include "../shapes"
+#include "../shapes/shapes"
 
 class sOriginPlane
 {

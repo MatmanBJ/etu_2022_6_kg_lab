@@ -8,9 +8,9 @@
 #include <QMainWindow>
 #include <QGridLayout>
 
-#include "../include/mainWindow.h"
-#include "../include/settingPanel.h"
-#include "../include/drawField.h"
+#include "../include_graphic/mainWindow.h"
+#include "../include_graphic/settingPanel.h"
+#include "../include_graphic/drawField.h"
 
 
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)

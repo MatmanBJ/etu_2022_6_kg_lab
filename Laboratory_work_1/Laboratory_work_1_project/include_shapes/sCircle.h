@@ -9,7 +9,7 @@
 #include <QPainter>
 #include <cmath>
 
-#include "../shapes"
+#include "../shapes/shapes"
 
 class sCircle
 {

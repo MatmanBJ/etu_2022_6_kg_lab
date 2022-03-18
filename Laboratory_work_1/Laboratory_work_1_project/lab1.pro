@@ -8,11 +8,11 @@ TEMPLATE = app
 
 
 SOURCES += ./main.cpp \
-./gui/mainWindow.cpp ./gui/drawField.cpp ./gui/settingPanel.cpp \
+./graphic/mainWindow.cpp ./graphic/drawField.cpp ./graphic/settingPanel.cpp \
 ./shapes/sPoint.cpp ./shapes/sLine.cpp ./shapes/sCircle.cpp \
 ./shapes/sOriginPlane.cpp \
 ./tools/matrix.cpp ./tools/sup.cpp
 
-HEADERS  += ./include/mainWindow.h ./include/drawField.h ./include/settingPanel.h \
-./include/matrix.h ./include/sup.h \
+HEADERS  += ./include_graphic/mainWindow.h ./include_graphic/drawField.h ./include_graphic/settingPanel.h \
+./include_graphic/matrix.h ./include_graphic/sup.h \
 ./shapes/shapes

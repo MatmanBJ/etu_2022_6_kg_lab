@@ -11,12 +11,12 @@
 
 #include <string>
 
-#include "../include/settingPanel.h"
-#include "../include/mainWindow.h"
-#include "../include/drawField.h"
+#include "../include_graphic/settingPanel.h"
+#include "../include_graphic/mainWindow.h"
+#include "../include_graphic/drawField.h"
 
 #include "../shapes/shapes"
-#include "../include/sup.h"
+#include "../include_graphic/sup.h"
 
 using namespace std;
 

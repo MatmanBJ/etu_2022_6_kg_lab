@@ -7,7 +7,7 @@
 #include <string>
 #include <iomanip>
 
-#include "../include/matrix.h"
+#include "../include_graphic/matrix.h"
 
 using namespace std;
 

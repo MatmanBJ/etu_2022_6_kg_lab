@@ -11,8 +11,8 @@
 #include <QGridLayout>
 #include <QMainWindow>
 
-#include "../include/settingPanel.h"
-#include "../include/drawField.h"
+#include "../include_graphic/settingPanel.h"
+#include "../include_graphic/drawField.h"
 
 class MainWindow : public QWidget
 {

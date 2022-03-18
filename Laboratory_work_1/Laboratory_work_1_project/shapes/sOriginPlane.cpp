@@ -4,7 +4,7 @@
 #include <QWidget>
 #include <QPainter>
 
-#include "shapes"
+#include "./shapes"
 
 
 sOriginPlane::sOriginPlane(const sOriginPlane &other)
