@@ -8,20 +8,19 @@
 #include <QGridLayout>
 #include <QDialog>
 #include <cmath>
-
 #include <string>
 
 #include "../include_graphic/settingPanel.h"
 #include "../include_graphic/mainWindow.h"
 #include "../include_graphic/drawField.h"
-
 #include "../shapes/shapes"
 #include "../include_graphic/sup.h"
 
 using namespace std;
 
-// constructor SettingPanel
+// ---------- settingPanel ----------
 
+// constructor
 SettingPanel::SettingPanel(QWidget *parent) : QWidget(parent)
 {
     _par = parent;
@@ -75,8 +74,9 @@ SettingPanel::SettingPanel(QWidget *parent) : QWidget(parent)
     connect(bStart, &QPushButton::released, this, &SettingPanel::check_and_start);
 }
 
-// algorithm if the checking is failed (message about reason of failing)
+// ---------- isFailed ----------
 
+// algorithm if the checking is failed (message about reason of failing)
 void SettingPanel::ifFailed(string msg)
 {
     QDialog *error = new QDialog();
@@ -88,8 +88,9 @@ void SettingPanel::ifFailed(string msg)
     error->show();
 }
 
-// treatment of input text and calling function named "non linear system" from "sup.cpp"
+// ---------- check_and_start ----------
 
+// treatment of input text and calling function named "non linear system" from "sup.cpp"
 void SettingPanel::check_and_start()
 {
     if(
@@ -108,9 +109,6 @@ void SettingPanel::check_and_start()
         ifFailed(string("All fields must be filled in"));
         return;
     }
-
-
-
 
     int x01, y01, x02, y02, r1, r2;
     bool is_ok, res_ok = false;
@@ -151,9 +149,6 @@ void SettingPanel::check_and_start()
 
     sPoint xo1 = sPoint(x01, y01, cb);
     sPoint xo2 = sPoint(x02, y02, cb);
-    //sCircle *o1 = new sCircle(*xo1, r1, cb);
-    //sCircle *o2 = new sCircle(*xo2, r2, cb);
-    //o1.sdraw(*qp); o2.sdraw(*qp);
 
     sPoint line11 = sPoint(0, 0, cb);
     sPoint line12 = sPoint(0, 0, cb);
@@ -166,8 +161,6 @@ void SettingPanel::check_and_start()
 
     solve_nonlinear_system(xo1, r1, xo2, r2, &line11, &line12, &line21, &line22, &line31, &line32, &line41, &line42);
 
-    //sLine *l1 = new sLine(*line1, *line2, cb);
-
     MainWindow *p = (MainWindow*)_par;
 
     (p->getDrawField())->init(x01, y01, r1,
@@ -178,7 +171,4 @@ void SettingPanel::check_and_start()
     line41.getX(), line41.getY(), line42.getX(), line42.getY(),
     cb);
     (p->getDrawField())->update();
-
-    //l1.sdraw(*qp);
-
 }

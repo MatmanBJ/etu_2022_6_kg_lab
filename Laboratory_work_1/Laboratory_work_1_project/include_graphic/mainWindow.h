@@ -14,15 +14,16 @@
 #include "../include_graphic/settingPanel.h"
 #include "../include_graphic/drawField.h"
 
+// ---------- MainWindow ----------
+
 class MainWindow : public QWidget
 {
-    private:
+private:
     SettingPanel *settingPanel;
     DrawField *drawField;
 
-    public:
+public:
     MainWindow(QWidget *parent = 0);
-
     SettingPanel* getSettingPanel();
     DrawField* getDrawField();
 };

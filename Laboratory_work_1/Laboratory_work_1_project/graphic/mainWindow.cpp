@@ -12,7 +12,9 @@
 #include "../include_graphic/settingPanel.h"
 #include "../include_graphic/drawField.h"
 
+// ---------- MainWindow ----------
 
+// constructor
 MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
 {
     //https://stackoverflow.com/questions/25450598/qlayout-attempting-to-add-qlayout-to-qwidget-which-already-has-a-layout
@@ -29,11 +31,17 @@ MainWindow::MainWindow(QWidget *parent) : QWidget(parent)
     setLayout(grid);
 }
 
+// ---------- getSettingPanel ----------
+
+// returning (getting) the current setting panel pointer
 SettingPanel* MainWindow::getSettingPanel()
 {
     return settingPanel;
 }
 
+// ---------- getDrawField ----------
+
+// returning (getting) the current draw field pointer
 DrawField* MainWindow::getDrawField()
 {
     return drawField;

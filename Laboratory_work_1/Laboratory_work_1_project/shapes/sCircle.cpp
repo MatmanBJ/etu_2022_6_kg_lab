@@ -7,26 +7,26 @@
 
 #include "./shapes"
 
+// ---------- sCircle ----------
 
 sCircle::sCircle(sPoint center, int R, const sOriginPlane &beginOfCoords)
 : p0(center), r(R), origin(beginOfCoords)
 {
 }
 
+// ---------- sCircle ----------
+
 sCircle::sCircle(int center_x, int center_y, int R, const sOriginPlane &beginOfCoords)
 : p0(center_x, center_y, beginOfCoords), r(R), origin(beginOfCoords)
 {
 }
 
+// ---------- sdraw ----------
+
 void sCircle::sdraw(QPainter& qp)
 {
     int x0 = p0.x();
     int y0 = p0.y();
-    /*
-    (x - x0)^2 + (y - y0)^2 = r^2
-    y = +sqrt(r^2 - (x-x0)^2) + y0
-    y = -sqrt(r^2 - (x-x0)^2) + y0
-    */
     for (int x = x0-r; x <= x0+r; ++x)
     {
         double sq = sqrt((double)(r*r - (x-x0)*(x-x0)));
@@ -43,6 +43,10 @@ void sCircle::sdraw(QPainter& qp)
     }
 }
 
+// ---------- getCenter ----------
+
 sPoint sCircle::getCenter() const {return p0;}
+
+// ---------- getR ----------
 
 int sCircle::getR() const {return r;}
