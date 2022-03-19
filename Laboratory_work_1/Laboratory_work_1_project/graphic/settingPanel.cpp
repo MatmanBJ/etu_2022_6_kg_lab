@@ -183,10 +183,57 @@ void SettingPanel::check_and_start()
     //std::cout << D << std::endl;
     if (D > 0)
     {
-        point_1[0] = (sqrt(D) - b) / (2 * a);
-        point_1[1] = y_0 - sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
-        point_2[0] = (-sqrt(D) - b) / (2 * a);
-        point_2[1] = y_0 + sqrt(r * r - (point_2[0] - x_0) * (point_2[0] - x_0));
+        // x0 -- circle
+        // x1 -- dot
+        float y_h, y_l;
+        point_1[0] = (sqrt(D) - b)/(2*a);
+        y_h = y_0 + sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) ); // y high -- "+" square root
+        y_l = y_0 - sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) ); // y low -- "-"" square root
+        // (x - x(dot))
+        if(((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_l - y_0)*(y_1 - y_l))==0)
+        {
+            point_1[1] = y_l;
+        }
+        else if (((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_h - y_0)*(y_1 - y_h))==0)
+        {
+            point_1[1] = y_h;
+        }
+        else
+        {
+            if (((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_l - y_0)*(y_1 - y_l))
+                >= ((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_h - y_0)*(y_1 - y_h)))
+            {
+                point_1[1] = y_h; // if y_l >= y_h => setting y_h (measurement error is less)
+            }
+            else // final else
+            {
+                point_1[1] = y_l;
+            }
+        }
+
+        point_2[0] = (-sqrt(D) - b)/(2*a);
+        y_h = y_0 + sqrt( r*r - (point_2[0] - x_0)*(point_2[0] - x_0) );
+        y_l = y_0 - sqrt( r*r - (point_2[0] - x_0)*(point_2[0] - x_0) );
+        if(((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_l - y_0)*(y_1 - y_l))==0)
+        {
+            point_2[1] = y_l;
+        }
+        else if (((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_h - y_0)*(y_1 - y_h))==0)
+        {
+            point_2[1] = y_h;
+        }
+        else
+        {
+            if (((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_l - y_0)*(y_1 - y_l))
+                >= ((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_h - y_0)*(y_1 - y_h)))
+            {
+                point_2[1] = y_h; // if y_l >= y_h => setting y_h (measurement error is less)
+            }
+            else // final else
+            {
+                point_2[1] = y_l;
+            }
+        }
     }
     else if (D == 0)
     {
