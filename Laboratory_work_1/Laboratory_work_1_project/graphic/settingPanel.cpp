@@ -10,10 +10,10 @@
 #include <cmath>
 #include <string>
 
+#include "../include_shapes/allshapes.h"
 #include "../include_graphic/settingPanel.h"
 #include "../include_graphic/mainWindow.h"
 #include "../include_graphic/drawField.h"
-#include "../shapes/shapes"
 #include "../include_graphic/sup.h"
 
 using namespace std;
@@ -26,8 +26,8 @@ SettingPanel::SettingPanel(QWidget *parent) : QWidget(parent)
     _par = parent;
 
     grid = new QGridLayout();
-    grid->setHorizontalSpacing(1); // интервал вертикальный
-    grid->setVerticalSpacing(1); // интервал горизонтальный
+    grid->setHorizontalSpacing(1); // vertical interval
+    grid->setVerticalSpacing(1); // horizontal interval
 
     QLabel *titleCircle1 = new QLabel("Circle 1:", this);
     grid->addWidget(titleCircle1, 0, 0, 1, 4);

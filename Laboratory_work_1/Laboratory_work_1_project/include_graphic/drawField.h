@@ -7,7 +7,7 @@
 
 #include <QWidget>
 
-#include "../shapes/shapes"
+#include "../include_shapes/allshapes.h"
 
 // https://ravesli.com/urok-12-risovanie-v-qt5/
 // http://ingraf.ru/axonometry/detail49.htm
@@ -31,13 +31,14 @@ private:
 public:
     DrawField(QWidget *parent = 0); // constructor
     ~DrawField(); // destructor
-    void init(int x01, int y01, int r1, 
-              int x02, int y02, int r2,
-              int l1x1, int l1y1, int l1x2, int l1y2,
-              int l2x1, int l2y1, int l2x2, int l2y2,
-              int l3x1, int l3y1, int l3x2, int l3y2,
-              int l4x1, int l4y1, int l4x2, int l4y2,
-              sOriginPlane cb);
+    void init(
+        int circle_1_x, int circle_1_y, int r1, // circle 1 coodrinates (x/y center, semidiameter)
+        int circle_2_x, int circle_2_y, int r2, // circle 2 coordinates (x/y center, semidiameter)
+        int tangent_1_x_1, int tangent_1_y_1, int tangent_1_x_2, int tangent_1_y_2, // tangent 1 coordinates (x/y start, x/y end)
+        int tangent_2_x_1, int tangent_2_y_1, int tangent_2_x_2, int tangent_2_y_2, // tangent 2 coordinates (x/y start, x/y end)
+        int tangent_3_x_1, int tangent_3_y_1, int tangent_3_x_2, int tangent_3_y_2, // tangent 3 coordinates (x/y start, x/y end)
+        int tangent_4_x_1, int tangent_4_y_1, int tangent_4_x_2, int tangent_4_y_2, // tangent 4 coordinates (x/y start, x/y end)
+        sOriginPlane offset); // offset from left high corner
     
 protected:
     void paintEvent(QPaintEvent *local_event); // draw event with local event

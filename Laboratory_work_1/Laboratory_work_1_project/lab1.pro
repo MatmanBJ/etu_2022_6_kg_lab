@@ -15,4 +15,4 @@ SOURCES += ./main.cpp \
 
 HEADERS  += ./include_graphic/mainWindow.h ./include_graphic/drawField.h ./include_graphic/settingPanel.h \
 ./include_graphic/matrix.h ./include_graphic/sup.h \
-./shapes/shapes
+./include_shapes/allshapes.h

@@ -5,39 +5,40 @@
 #include <QPainter>
 #include <cmath>
 
-#include "./shapes"
+#include "../include_shapes/allshapes.h"
 
 // ---------- sCircle ----------
 
 sCircle::sCircle(sPoint center, int R, const sOriginPlane &beginOfCoords)
-: p0(center), r(R), origin(beginOfCoords)
+: point(center), r(R), origin(beginOfCoords)
 {}
 
 // ---------- sCircle ----------
 
 sCircle::sCircle(int center_x, int center_y, int R, const sOriginPlane &beginOfCoords)
-: p0(center_x, center_y, beginOfCoords), r(R), origin(beginOfCoords)
+: point(center_x, center_y, beginOfCoords), r(R), origin(beginOfCoords)
 {}
 
 // ---------- sdraw ----------
 
-void sCircle::sdraw(QPainter& qp)
+void sCircle::sdraw(QPainter& local_qpainter)
 {
-    int x0 = p0.x();
-    int y0 = p0.y();
-    for (int x = x0-r; x <= x0+r; ++x)
+    int x_0 = point.x(); // x coordinate
+    int y_0 = point.y(); // y coodrinate
+    // counting y coordinates for putting points (from start x - r to end x + r)
+    for (int x = x_0 - r; x <= x_0 + r; x++)
     {
-        double sq = sqrt((double)(r*r - (x-x0)*(x-x0)));
-        double buff = sq + y0;
-        buff = buff < 0 ? buff-0.5: buff+0.5;
-        int y1 = (int)(buff);
+        double horde = sqrt((double)(r*r - (x - x_0)*(x - x_0))); // horde from begit to circle
+        double y_new = y_0 + horde; // adding + horde to draw
+        y_new = y_new < 0 ? y_new - 0.5 : y_new + 0.5; // counting nearest integer value
+        int y_1 = (int)(y_new); // making an integer value
 
-        buff = -sq + y0;
-        buff = buff < 0 ? buff-0.5: buff+0.5;
-        int y2 = (int)(buff);
+        y_new =  y_0 - horde; // adding - horde to draw
+        y_new = y_new < 0 ? y_new - 0.5 : y_new + 0.5; // counting nearest integer value
+        int y_2 = (int)(y_new); // making an integer value
 
-        qp.drawPoint(x+origin.getX(), y1+origin.getY());
-        qp.drawPoint(x+origin.getX(), y2+origin.getY());
+        local_qpainter.drawPoint(x + origin.getX(), y_1 + origin.getY()); // drawing point up
+        local_qpainter.drawPoint(x + origin.getX(), y_2 + origin.getY()); // drawing point down
     }
 }
 
@@ -45,12 +46,12 @@ void sCircle::sdraw(QPainter& qp)
 
 sPoint sCircle::getCenter() const
 {
-    return p0;
+    return point; // returning center point (with coordinates insides)
 }
 
 // ---------- getR ----------
 
 int sCircle::getR() const
 {
-    return r;
+    return r; // returning semidiameter length
 }

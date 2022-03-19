@@ -8,24 +8,23 @@
 #include <QPainter>
 #include <cmath>
 
-#include "../shapes/shapes"
+#include "../include_shapes/allshapes.h"
 
 // ---------- sCircle ----------
 
 class sCircle
 {
 private:
-    const sPoint p0;
-    const int r;
-    const sOriginPlane origin;
+    const sPoint point; // center point object (with coordinates inside)
+    const int r; // semidiameter length
+    const sOriginPlane origin; // begin of coodrdinates
 
 public:
-    sCircle(sPoint center, int R, const sOriginPlane &beginOfCoords);
-    sCircle(int center_x, int center_y, int R, const sOriginPlane &beginOfCoords);
-
-    void sdraw(QPainter& qp);
-    sPoint getCenter() const;
-    int getR() const;
+    sCircle(sPoint center, int R, const sOriginPlane &beginOfCoords); // constructor
+    sCircle(int center_x, int center_y, int R, const sOriginPlane &beginOfCoords); // constructor
+    void sdraw(QPainter& local_qpainter); // drawing circle
+    sPoint getCenter() const; // getting center point
+    int getR() const; // getting semidiameter length
 };
 
 #endif // SCIRCLE_HPP

@@ -4,7 +4,7 @@
 #ifndef SUP_H
 #define SUP_H
 
-#include "../shapes/shapes"
+#include "../include_shapes/allshapes.h"
 
 // ---------- solve_nonlinear_system----------
 

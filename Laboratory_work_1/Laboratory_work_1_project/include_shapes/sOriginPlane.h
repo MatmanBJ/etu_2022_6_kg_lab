@@ -7,7 +7,7 @@
 #include <QWidget>
 #include <QPainter>
 
-#include "../shapes/shapes"
+#include "../include_shapes/allshapes.h"
 
 // ---------- sOriginPlane ----------
 

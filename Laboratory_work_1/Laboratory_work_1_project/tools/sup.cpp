@@ -6,10 +6,9 @@
 #include <stdlib.h>
 #include <string>
 #include <sstream>
-//#include <cstring>
 
+#include "../include_shapes/allshapes.h"
 #include "../include_graphic/sup.h"
-#include "../shapes/shapes"
 
 using namespace std;
 

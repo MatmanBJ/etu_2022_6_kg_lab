@@ -11,8 +11,8 @@
 #include <cmath>
 #include <iostream>
 
+#include "../include_shapes/allshapes.h"
 #include "../include_graphic/drawField.h"
-#include "../shapes/shapes"
 #include "../include_graphic/sup.h"
 
 // ---------- DrawField ----------
@@ -20,6 +20,7 @@
 // constructor
 DrawField::DrawField(QWidget *parent) : QWidget(parent)
 {
+    // creating all the new objects
     circle_1 = NULL;
     circle_2 = NULL;
     //tangent_1 = NULL; // here 1
@@ -41,6 +42,7 @@ DrawField::DrawField(QWidget *parent) : QWidget(parent)
 // destructor
 DrawField::~DrawField()
 {
+    // destructing (deleting) all the objects
     if (circle_1 != NULL)
     {
         delete circle_1;
@@ -84,13 +86,14 @@ void DrawField::paintEvent(QPaintEvent *local_event)
 // ---------- init ----------
 
 // initializing cordinates, that we counted
-void DrawField::init(int x01, int y01, int r1, 
-              int x02, int y02, int r2,
-              int l1x1, int l1y1, int l1x2, int l1y2,
-              int l2x1, int l2y1, int l2x2, int l2y2,
-              int l3x1, int l3y1, int l3x2, int l3y2,
-              int l4x1, int l4y1, int l4x2, int l4y2,
-              sOriginPlane cb)
+void DrawField::init(
+    int circle_1_x, int circle_1_y, int r1, // circle 1 coodrinates (x/y center, semidiameter)
+    int circle_2_x, int circle_2_y, int r2, // circle 2 coordinates (x/y center, semidiameter)
+    int tangent_1_x_1, int tangent_1_y_1, int tangent_1_x_2, int tangent_1_y_2, // tangent 1 coordinates (x/y start, x/y end)
+    int tangent_2_x_1, int tangent_2_y_1, int tangent_2_x_2, int tangent_2_y_2, // tangent 2 coordinates (x/y start, x/y end)
+    int tangent_3_x_1, int tangent_3_y_1, int tangent_3_x_2, int tangent_3_y_2, // tangent 3 coordinates (x/y start, x/y end)
+    int tangent_4_x_1, int tangent_4_y_1, int tangent_4_x_2, int tangent_4_y_2, // tangent 4 coordinates (x/y start, x/y end)
+    sOriginPlane offset) // offset from left high corner
 {
     // cleaning before making something -- we can input new parameters
     if (circle_1 != NULL)
@@ -122,14 +125,14 @@ void DrawField::init(int x01, int y01, int r1,
         delete semidiameter_2;
     }
     
-    circle_1 = new sCircle(x01, y01, r1, cb); // center of the circle and its semidiameter
-    circle_2 = new sCircle(x02, y02, r2, cb); // center of the circle and its semidiameter
-    //tangent_1 = new sLine(l1x1, l1y1, l1x2, l1y2, cb); // here 4
-    tangent_2 = new sLine(l2x1, l2y1, l2x2, l2y2, cb); // from first border point to second
-    tangent_3 = new sLine(l3x1, l3y1, l3x2, l3y2, cb); // from first border point to second
-    //tangent_4 = new sLine(l4x1, l4y1, l4x2, l4y2, cb); // from first border point to second
-    semidiameter_1 = new sLine(x01, y01, l2x1, l2y1, cb); // semidiameter from center to border point
-    semidiameter_2 = new sLine(x01, y01, l3x1, l3y1, cb); // semidiameter from center to border point
+    circle_1 = new sCircle(circle_1_x, circle_1_y, r1, offset); // center of the circle and its semidiameter
+    circle_2 = new sCircle(circle_2_x, circle_2_y, r2, offset); // center of the circle and its semidiameter
+    //tangent_1 = new sLine(tangent_1_x_1, tangent_1_y_1, tangent_1_x_2, tangent_1_y_2, offset); // here 4
+    tangent_2 = new sLine(tangent_2_x_1, tangent_2_y_1, tangent_2_x_2, tangent_2_y_2, offset); // from first border point to second
+    tangent_3 = new sLine(tangent_3_x_1, tangent_3_y_1, tangent_3_x_2, tangent_3_y_2, offset); // from first border point to second
+    //tangent_4 = new sLine(tangent_4_x_1, tangent_4_y_1, tangent_4_x_2, tangent_4_y_2, offset); // from first border point to second
+    semidiameter_1 = new sLine(circle_1_x, circle_1_y, tangent_2_x_1, tangent_2_y_1, offset); // semidiameter from center to border point
+    semidiameter_2 = new sLine(circle_1_x, circle_1_y, tangent_3_x_1, tangent_3_y_1, offset); // semidiameter from center to border point
 }
 
 // ---------- drawLines ----------
