@@ -9,9 +9,6 @@
 
 #include "../include_shapes/allshapes.h"
 
-// https://ravesli.com/urok-12-risovanie-v-qt5/
-// http://ingraf.ru/axonometry/detail49.htm
-
 // ---------- DrawField ----------
 
 class DrawField : public QWidget
@@ -19,8 +16,8 @@ class DrawField : public QWidget
 private:
     const unsigned W = 300; // 300 basic
     const unsigned H = 350; // 350 basic
-    sCircle *circle_1; // circle 1
-    sCircle *circle_2; // circle 2
+    sCircle *circle_1; // circle
+    sPoint *circle_2; // point
     sLine *tangent_1; // tangent line 1
     sLine *tangent_2; // tangent line 2
     sLine *tangent_3; // tangent line 3
@@ -31,23 +28,21 @@ private:
     sLine *b; // x-asix
     sLine *x_arrow_1; // x-arrow part 1
     sLine *x_arrow_2; // x-arrow part 2
-    sLine *x_letter_1;
-    sLine *x_letter_2;
+    sLine *x_letter_1; // x-letter part 1
+    sLine *x_letter_2; // x-letter part 2
     sLine *y_arrow_1; // y-arrow part 1
     sLine *y_arrow_2; // y-arrow part 2
-    sLine *y_letter_1;
-    sLine *y_letter_2;
+    sLine *y_letter_1; // y-letter part 1
+    sLine *y_letter_2; // y-letter part 2
 
 public:
     DrawField(QWidget *parent = 0); // constructor
     ~DrawField(); // destructor
     void init(
-        int circle_1_x, int circle_1_y, int r1, // circle 1 coodrinates (x/y center, semidiameter)
-        int circle_2_x, int circle_2_y, int r2, // circle 2 coordinates (x/y center, semidiameter)
-        int tangent_1_x_1, int tangent_1_y_1, int tangent_1_x_2, int tangent_1_y_2, // tangent 1 coordinates (x/y start, x/y end)
+        int circle_1_x, int circle_1_y, int r1, // circle coodrinates (x/y center, semidiameter)
+        int circle_2_x, int circle_2_y, // dot coordinates (x/y center)
         int tangent_2_x_1, int tangent_2_y_1, int tangent_2_x_2, int tangent_2_y_2, // tangent 2 coordinates (x/y start, x/y end)
         int tangent_3_x_1, int tangent_3_y_1, int tangent_3_x_2, int tangent_3_y_2, // tangent 3 coordinates (x/y start, x/y end)
-        int tangent_4_x_1, int tangent_4_y_1, int tangent_4_x_2, int tangent_4_y_2, // tangent 4 coordinates (x/y start, x/y end)
         sOriginPlane offset); // offset from left high corner
     
 protected:

@@ -14,7 +14,6 @@
 #include "../include_graphic/settingPanel.h"
 #include "../include_graphic/mainWindow.h"
 #include "../include_graphic/drawField.h"
-#include "../include_graphic/sup.h"
 
 using namespace std;
 
@@ -29,45 +28,28 @@ SettingPanel::SettingPanel(QWidget *parent) : QWidget(parent)
     grid->setHorizontalSpacing(1); // vertical interval
     grid->setVerticalSpacing(1); // horizontal interval
 
+    // "Circle" and "Point" fields placing
+
     QLabel *titleCircle1 = new QLabel("Circle", this);
     grid->addWidget(titleCircle1, 0, 0, 1, 4);
-
     QLabel *titleCircle2 = new QLabel("Point", this);
     grid->addWidget(titleCircle2, 5, 0, 1, 4);
 
-    //QLabel *titleShift = new QLabel("Shift:", this);
-    //grid->addWidget(titleShift, 9, 0, 1, 4);
+    // "X-coordianate (X) " and "Y-coordianate (Y) " fields placing for each dot and circle
 
     QLabel *Xlabel1 = new QLabel("X-coordianate (X) ", this);
     grid->addWidget(Xlabel1, 1, 0, 1, 1);
     QLabel *Xlabel2 = new QLabel("X-coordianate (X) ", this);
     grid->addWidget(Xlabel2, 6, 0, 1, 1);
-
-    //QLabel *Xlabel1 = new QLabel("X:", this);
-    //grid->addWidget(Xlabel1, 1, 0, 1, 1);
-    //QLabel *Xlabel2 = new QLabel("X:", this);
-    //grid->addWidget(Xlabel2, 6, 0, 1, 1);
-    //QLabel *Xlabel3 = new QLabel("X:", this);
-    //grid->addWidget(Xlabel3, 10, 0, 1, 1);
-
     QLabel *Ylabel1 = new QLabel("Y-coordinate (Y) ", this);
     grid->addWidget(Ylabel1, 2, 0, 1, 1);
     QLabel *Ylabel2 = new QLabel("Y-coordinate (Y) ", this);
     grid->addWidget(Ylabel2, 7, 0, 1, 1);
 
-    //QLabel *Ylabel1 = new QLabel("Y:", this);
-    //grid->addWidget(Ylabel1, 2, 0, 1, 1);
-    //QLabel *Ylabel2 = new QLabel("Y:", this);
-    //grid->addWidget(Ylabel2, 7, 0, 1, 1);
-    //QLabel *Ylabel3 = new QLabel("Y:", this);
-    //grid->addWidget(Ylabel3, 10, 2, 1, 1);
+    // "Semidiameter (R) " field placing
 
     QLabel *Rlabel1 = new QLabel("Semidiameter (R) ", this);
     grid->addWidget(Rlabel1, 3, 0, 1, 1);
-    //QLabel *Rlabel1 = new QLabel("R:", this);
-    //grid->addWidget(Rlabel1, 1, 2, 1, 1);
-    //QLabel *Rlabel2 = new QLabel("R:", this);
-    //grid->addWidget(Rlabel2, 6, 2, 1, 1);
 
     // fields for input values
 
@@ -77,18 +59,12 @@ SettingPanel::SettingPanel(QWidget *parent) : QWidget(parent)
     grid->addWidget(bY1, 2, 1, 1, 1);
     bR1 = new QLineEdit(this);
     grid->addWidget(bR1, 3, 1, 1, 1);
-    //bR1 = new QLineEdit(this);
-    //grid->addWidget(bR1, 1, 3, 1, 1);
     bX2 = new QLineEdit(this);
     grid->addWidget(bX2, 6, 1, 1, 1);
     bY2 = new QLineEdit(this);
     grid->addWidget(bY2, 7, 1, 1, 1);
-    //bR2 = new QLineEdit(this);
-    //grid->addWidget(bR2, 6, 3, 1, 1);
-    //bShiftX = new QLineEdit(this);
-    //grid->addWidget(bShiftX, 10, 1, 1, 1);
-    //bShiftY = new QLineEdit(this);
-    //grid->addWidget(bShiftY, 10, 3, 1, 1);
+
+    // fields for start drawing values
 
     bStart = new QPushButton("DRAW", this);
     grid->addWidget(bStart, 13, 0, 4, 2);
@@ -117,24 +93,19 @@ void SettingPanel::ifFailed(string msg)
 // treatment of input text and calling function named "non linear system" from "sup.cpp"
 void SettingPanel::check_and_start()
 {
-    if(
+    if (
         bX1->text().isEmpty() ||
         bY1->text().isEmpty() ||
         bR1->text().isEmpty() ||
-
         bX2->text().isEmpty() ||
-        bY2->text().isEmpty()// ||
-        //bR2->text().isEmpty() ||
-
-        //bShiftX->text().isEmpty() ||
-        //bShiftY->text().isEmpty()
+        bY2->text().isEmpty()
     )
     {
         ifFailed(string("Please, input all the values"));
         return;
     }
 
-    int x01, y01, x02, y02, r1, r2;
+    int x01, y01, x02, y02, r1;
     bool is_ok, res_ok = false;
     x01 = bX1->text().toInt(&is_ok);
     res_ok += !is_ok;
@@ -146,38 +117,37 @@ void SettingPanel::check_and_start()
     res_ok += !is_ok;
     y02 = bY2->text().toInt(&is_ok);
     res_ok += !is_ok;
-    //r2 = bR2->text().toInt(&is_ok);
-    //res_ok += !is_ok;
-    
-    int cb_x, cb_y;
-    //cb_x = bShiftX->text().toInt(&is_ok);
-    //res_ok += !is_ok;
-    //cb_y = bShiftY->text().toInt(&is_ok);
-    //res_ok += !is_ok;
+
     res_ok = !res_ok;
 
-    if(res_ok != true)
+    // checking error for input values is integer or not
+
+    if (res_ok != true)
     {
         ifFailed(string("Please, input the integer values"));
         return;
     }
 
-    /*if(r1 <= 0 || r2 <= 0)
+    // checking error for semidiameter positivity
+
+    if (r1 <= 0)
     {
-        ifFailed(string("The radius must be a positive number"));
+        ifFailed(string("Please, input the positive semidiameter number"));
         return;
-    }*/
+    }
+
+    // checking error for crossing circle borders
 
     double d = ((double)x01 - (double)x02)*((double)x01 - (double)x02);
     d = d + ((double)y01 - (double)y02)*((double)y01 - (double)y02);
     d = sqrt(d);
-    if(d <= r1 + r2)
+    if (d <= r1 + 0)
     {
         ifFailed(string("Please, input the point coordinates outside from the circle, not inside or on the circle"));
         return;
     }
 
-    sOriginPlane cb(cb_x, cb_y);
+    sOriginPlane cb(0, 0);
 
     sPoint xo1 = sPoint(x01, y01, cb);
     sPoint xo2 = sPoint(x02, y02, cb);
@@ -191,9 +161,6 @@ void SettingPanel::check_and_start()
     sPoint line41 = sPoint(0, 0, cb);
     sPoint line42 = sPoint(0, 0, cb);
 
-    //solve_nonlinear_system(xo1, r1, xo2, r2, &line11, &line12, &line21, &line22, &line31, &line32, &line41, &line42);
-
-    r2 = 0;
     float r = r1;
     float x_0 = x01; // center of circle
     float y_0 = y01; // center of circle
@@ -205,7 +172,7 @@ void SettingPanel::check_and_start()
     float b = -2 * ((x_1 - x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + x_0 * (y_0 - y_1) * (y_0 - y_1));
     float c = (r * r + x_0 * x_1 - x_0 * x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + (y_0 - y_1) * (y_0 - y_1) * (x_0 * x_0 - r * r);
     float D = b * b - 4 * a * c;
-    //std::cout << D << std::endl;
+
     if (D > 0)
     {
         // x0 -- circle
@@ -214,7 +181,7 @@ void SettingPanel::check_and_start()
         point_1[0] = (sqrt(D) - b)/(2*a);
         y_h = y_0 + sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) ); // y high -- "+" square root
         y_l = y_0 - sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) ); // y low -- "-"" square root
-        // (x - x(dot))
+
         if(((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_l - y_0)*(y_1 - y_l))==0)
         {
             point_1[1] = y_l;
@@ -268,6 +235,8 @@ void SettingPanel::check_and_start()
         point_2[1] = y_0 - sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
     }
 
+    // setting values for sending to other function
+
     float res[4] = { point_1[0],point_1[1],point_2[0],point_2[1] };
     line21.setX(point_1[0]);
     line21.setY(point_1[1]);
@@ -278,16 +247,16 @@ void SettingPanel::check_and_start()
     line32.setX(x02);
     line32.setY(y02);
 
-    //for (float re : res)std::cout << re << std::endl;
+    // main window update
     
     MainWindow *p = (MainWindow*)_par;
 
+    // drawing counted values
+
     (p->getDrawField())->init(x01, y01, r1,
-    x02, y02, r2,
-    line11.getX(), line11.getY(), line12.getX(), line12.getY(),
+    x02, y02,
     line21.getX(), line21.getY(), line22.getX(), line22.getY(),
     line31.getX(), line31.getY(), line32.getX(), line32.getY(),
-    line41.getX(), line41.getY(), line42.getX(), line42.getY(),
     cb);
     (p->getDrawField())->update();
 }

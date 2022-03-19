@@ -5,7 +5,6 @@
 #include <QIcon>
 
 #include "./include_graphic/mainWindow.h"
-#include "./include_graphic/sup.h"
 
 // ---------- MAIN ----------
 
@@ -15,9 +14,9 @@ int main(int argc, char *argv[])
     
     MainWindow window;
 
-    window.setWindowTitle("lab1");
-    window.resize(1000, 750);
-    //window.setWindowIcon(QIcon("./imgsrc/ico.png"));
+    window.setWindowTitle("Laboratory work 1");
+    window.resize(1000, 500);
+    //window.setWindowIcon(QIcon("./icon/icon.ico"));
 
     window.show();
 

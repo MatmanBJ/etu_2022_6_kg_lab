@@ -13,7 +13,6 @@
 
 #include "../include_shapes/allshapes.h"
 #include "../include_graphic/drawField.h"
-#include "../include_graphic/sup.h"
 
 // ---------- DrawField ----------
 
@@ -23,16 +22,12 @@ DrawField::DrawField(QWidget *parent) : QWidget(parent)
     // creating all the new objects
     circle_1 = NULL;
     circle_2 = NULL;
-    //tangent_1 = NULL; // here 1
     tangent_2 = NULL;
     tangent_3 = NULL;
-    //tangent_4 = NULL;
     semidiameter_1 = NULL;
     semidiameter_2 = NULL;
 
     // resizing and setting background
-    //resize(W, H);
-    //this->setStyleSheet("background-color: rgb(200,200,200); margin:0px; border:1px solid rgb(0, 0, 0); "); // grey
     resize(W, H);
     this->setStyleSheet("background-color: rgb(255,255,255); margin:0px; border:1px solid rgb(0, 0, 0); "); // white
 }
@@ -51,8 +46,6 @@ DrawField::~DrawField()
     {
         delete circle_2;
     }
-    //if (tangent_1 != NULL) // here 2
-        //delete tangent_1; // here 2
     if (tangent_2 != NULL)
     {
         delete tangent_2;
@@ -61,8 +54,6 @@ DrawField::~DrawField()
     {
         delete tangent_3;
     }
-    //if (tangent_4 != NULL)
-        //delete tangent_4;
     if (semidiameter_1 != NULL)
     {
         delete semidiameter_1;
@@ -87,12 +78,10 @@ void DrawField::paintEvent(QPaintEvent *local_event)
 
 // initializing cordinates, that we counted
 void DrawField::init(
-    int circle_1_x, int circle_1_y, int r1, // circle 1 coodrinates (x/y center, semidiameter)
-    int circle_2_x, int circle_2_y, int r2, // circle 2 coordinates (x/y center, semidiameter)
-    int tangent_1_x_1, int tangent_1_y_1, int tangent_1_x_2, int tangent_1_y_2, // tangent 1 coordinates (x/y start, x/y end)
+    int circle_1_x, int circle_1_y, int r1, // circle coodrinates (x/y center, semidiameter)
+    int circle_2_x, int circle_2_y, // dot coordinates (x/y)
     int tangent_2_x_1, int tangent_2_y_1, int tangent_2_x_2, int tangent_2_y_2, // tangent 2 coordinates (x/y start, x/y end)
     int tangent_3_x_1, int tangent_3_y_1, int tangent_3_x_2, int tangent_3_y_2, // tangent 3 coordinates (x/y start, x/y end)
-    int tangent_4_x_1, int tangent_4_y_1, int tangent_4_x_2, int tangent_4_y_2, // tangent 4 coordinates (x/y start, x/y end)
     sOriginPlane offset) // offset from left high corner
 {
     // cleaning before making something -- we can input new parameters
@@ -104,8 +93,6 @@ void DrawField::init(
     {
         delete circle_2;
     }
-    //if (tangent_1 != NULL) // here 3
-        //delete tangent_1; // here 3
     if (tangent_2 != NULL)
     {
         delete tangent_2;
@@ -114,8 +101,6 @@ void DrawField::init(
     {
         delete tangent_3;
     }
-    //if (tangent_4 != NULL)
-        //delete tangent_4;
     if (semidiameter_1 != NULL)
     {
         delete semidiameter_1;
@@ -128,11 +113,9 @@ void DrawField::init(
     sOriginPlane *local_offset = new sOriginPlane (W, H);
 
     circle_1 = new sCircle(circle_1_x, circle_1_y, r1, *local_offset); // center of the circle and its semidiameter
-    circle_2 = new sCircle(circle_2_x, circle_2_y, r2, *local_offset); // center of the circle and its semidiameter
-    //tangent_1 = new sLine(tangent_1_x_1, tangent_1_y_1, tangent_1_x_2, tangent_1_y_2, *local_offset); // here 4
+    circle_2 = new sPoint(circle_2_x, circle_2_y, *local_offset); // center of the circle and its semidiameter
     tangent_2 = new sLine(tangent_2_x_1, tangent_2_y_1, tangent_2_x_2, tangent_2_y_2, *local_offset); // from first border point to second
     tangent_3 = new sLine(tangent_3_x_1, tangent_3_y_1, tangent_3_x_2, tangent_3_y_2, *local_offset); // from first border point to second
-    //tangent_4 = new sLine(tangent_4_x_1, tangent_4_y_1, tangent_4_x_2, tangent_4_y_2, *local_offset); // from first border point to second
     semidiameter_1 = new sLine(circle_1_x, circle_1_y, tangent_2_x_1, tangent_2_y_1, *local_offset); // semidiameter from center to border point
     semidiameter_2 = new sLine(circle_1_x, circle_1_y, tangent_3_x_1, tangent_3_y_1, *local_offset); // semidiameter from center to border point
 
@@ -149,18 +132,6 @@ void DrawField::init(
     y_arrow_2 = new sLine(0, H, 10, H - 10, *local_offset);
     y_letter_1 = new sLine(-20, H - 5, -25, H - 10, *local_offset);
     y_letter_2 = new sLine(-15, H - 10, -25, H, *local_offset);
-    
-    /*circle_1 = new sCircle(circle_1_x, circle_1_y, r1, offset); // center of the circle and its semidiameter
-    circle_2 = new sCircle(circle_2_x, circle_2_y, r2, offset); // center of the circle and its semidiameter
-    //tangent_1 = new sLine(tangent_1_x_1, tangent_1_y_1, tangent_1_x_2, tangent_1_y_2, offset); // here 4
-    tangent_2 = new sLine(tangent_2_x_1, tangent_2_y_1, tangent_2_x_2, tangent_2_y_2, offset); // from first border point to second
-    tangent_3 = new sLine(tangent_3_x_1, tangent_3_y_1, tangent_3_x_2, tangent_3_y_2, offset); // from first border point to second
-    //tangent_4 = new sLine(tangent_4_x_1, tangent_4_y_1, tangent_4_x_2, tangent_4_y_2, offset); // from first border point to second
-    semidiameter_1 = new sLine(circle_1_x, circle_1_y, tangent_2_x_1, tangent_2_y_1, offset); // semidiameter from center to border point
-    semidiameter_2 = new sLine(circle_1_x, circle_1_y, tangent_3_x_1, tangent_3_y_1, offset); // semidiameter from center to border point
-
-    a = new sLine(0, -5000, 0, 5000, offset);
-    b = new sLine(-5000, 0, 5000, 0, offset);*/
 }
 
 // ---------- drawLines ----------
@@ -168,7 +139,7 @@ void DrawField::init(
 // drawing lines, that we have
 void DrawField::drawLines(QPainter *local_qpainter)
 {
-    if(circle_1 != NULL && circle_2 != NULL && /*tangent_1 != NULL && // here 5*/ tangent_2 != NULL && tangent_3 != NULL/* && tangent_4 != NULL*/)
+    if(circle_1 != NULL && circle_2 != NULL && tangent_2 != NULL && tangent_3 != NULL)
     {
         QColor color_1(0, 0, 255); // blue color setting for circles
         QPen pen_1(color_1); // pen setting
@@ -181,10 +152,8 @@ void DrawField::drawLines(QPainter *local_qpainter)
         QPen pen_2(color_2); // pen setting
         local_qpainter->setPen(pen_2); // pen setting for special object
 
-        //tangent_1->sdraw(*qp); // here 6
         tangent_2->sdraw(*local_qpainter);
         tangent_3->sdraw(*local_qpainter);
-        //tangent_4->sdraw(*qp);
 
         QColor color_3(0, 0, 0); // black color setting for semidiameter
         QPen pen_3(color_3); // pen setting
