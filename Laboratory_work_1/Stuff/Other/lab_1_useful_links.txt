@@ -1,0 +1,9 @@
+https://ravesli.com/uroki-po-qt5/ -- QT
+
+https://forum.qt.io/topic/53253/set-icon-of-my-exe-file -- setting icon
+
+https://doc.qt.io/archives/qt-4.8/appicon.html -- setting icon
+
+https://stackoverflow.com/questions/41188707/how-to-force-libraries-to-link-statically-in-qt-creator -- static compile
+
+https://news.ycombinator.com/item?id=23655167 -- ???
