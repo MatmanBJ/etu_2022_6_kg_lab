@@ -198,10 +198,10 @@ void SettingPanel::check_and_start()
         {
             point_1[1] = y_h;
         }
-        else
+        else // abs (number module) is necessary
         {
-            if (((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_l - y_0)*(y_1 - y_l))
-                >= ((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_h - y_0)*(y_1 - y_h)))
+            if (abs(((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_l - y_0)*(y_1 - y_l)))
+                >= abs(((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_h - y_0)*(y_1 - y_h)))) // abs -- absolute
             {
                 point_1[1] = y_h; // if y_l >= y_h => setting y_h (measurement error is less)
             }
@@ -222,10 +222,10 @@ void SettingPanel::check_and_start()
         {
             point_2[1] = y_h;
         }
-        else
+        else // abs (number module) is necessary
         {
-            if (((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_l - y_0)*(y_1 - y_l))
-                >= ((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_h - y_0)*(y_1 - y_h)))
+            if (abs(((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_l - y_0)*(y_1 - y_l)))
+                >= abs(((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_h - y_0)*(y_1 - y_h))))
             {
                 point_2[1] = y_h; // if y_l >= y_h => setting y_h (measurement error is less)
             }
