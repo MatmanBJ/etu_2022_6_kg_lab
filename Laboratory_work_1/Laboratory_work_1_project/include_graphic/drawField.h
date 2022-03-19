@@ -27,6 +27,16 @@ private:
     sLine *tangent_4; // tangent line 4
     sLine *semidiameter_1; // semidiameter (rus. radius) 1
     sLine *semidiameter_2; // semidiameter (rus. radius) 1
+    sLine *a; // y-axis
+    sLine *b; // x-asix
+    sLine *x_arrow_1; // x-arrow part 1
+    sLine *x_arrow_2; // x-arrow part 2
+    sLine *x_letter_1;
+    sLine *x_letter_2;
+    sLine *y_arrow_1; // y-arrow part 1
+    sLine *y_arrow_2; // y-arrow part 2
+    sLine *y_letter_1;
+    sLine *y_letter_2;
 
 public:
     DrawField(QWidget *parent = 0); // constructor

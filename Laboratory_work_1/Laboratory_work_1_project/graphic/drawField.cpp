@@ -124,8 +124,33 @@ void DrawField::init(
     {
         delete semidiameter_2;
     }
+
+    sOriginPlane *local_offset = new sOriginPlane (W, H);
+
+    circle_1 = new sCircle(circle_1_x, circle_1_y, r1, *local_offset); // center of the circle and its semidiameter
+    circle_2 = new sCircle(circle_2_x, circle_2_y, r2, *local_offset); // center of the circle and its semidiameter
+    //tangent_1 = new sLine(tangent_1_x_1, tangent_1_y_1, tangent_1_x_2, tangent_1_y_2, *local_offset); // here 4
+    tangent_2 = new sLine(tangent_2_x_1, tangent_2_y_1, tangent_2_x_2, tangent_2_y_2, *local_offset); // from first border point to second
+    tangent_3 = new sLine(tangent_3_x_1, tangent_3_y_1, tangent_3_x_2, tangent_3_y_2, *local_offset); // from first border point to second
+    //tangent_4 = new sLine(tangent_4_x_1, tangent_4_y_1, tangent_4_x_2, tangent_4_y_2, *local_offset); // from first border point to second
+    semidiameter_1 = new sLine(circle_1_x, circle_1_y, tangent_2_x_1, tangent_2_y_1, *local_offset); // semidiameter from center to border point
+    semidiameter_2 = new sLine(circle_1_x, circle_1_y, tangent_3_x_1, tangent_3_y_1, *local_offset); // semidiameter from center to border point
+
+    // setting coordinates axis and letters
+
+    a = new sLine(0, -5000, 0, 5000, *local_offset);
+    b = new sLine(-5000, 0, 5000, 0, *local_offset);
+
+    x_arrow_1 = new sLine(W, 0, W - 10, -10, *local_offset);
+    x_arrow_2 = new sLine(W, 0, W - 10, 10, *local_offset);
+    x_letter_1 = new sLine(W, -15, W - 10, -25, *local_offset);
+    x_letter_2 = new sLine(W - 10, -15, W, -25, *local_offset);
+    y_arrow_1 = new sLine(0, H, -10, H - 10, *local_offset);
+    y_arrow_2 = new sLine(0, H, 10, H - 10, *local_offset);
+    y_letter_1 = new sLine(-20, H - 5, -25, H - 10, *local_offset);
+    y_letter_2 = new sLine(-15, H - 10, -25, H, *local_offset);
     
-    circle_1 = new sCircle(circle_1_x, circle_1_y, r1, offset); // center of the circle and its semidiameter
+    /*circle_1 = new sCircle(circle_1_x, circle_1_y, r1, offset); // center of the circle and its semidiameter
     circle_2 = new sCircle(circle_2_x, circle_2_y, r2, offset); // center of the circle and its semidiameter
     //tangent_1 = new sLine(tangent_1_x_1, tangent_1_y_1, tangent_1_x_2, tangent_1_y_2, offset); // here 4
     tangent_2 = new sLine(tangent_2_x_1, tangent_2_y_1, tangent_2_x_2, tangent_2_y_2, offset); // from first border point to second
@@ -133,6 +158,9 @@ void DrawField::init(
     //tangent_4 = new sLine(tangent_4_x_1, tangent_4_y_1, tangent_4_x_2, tangent_4_y_2, offset); // from first border point to second
     semidiameter_1 = new sLine(circle_1_x, circle_1_y, tangent_2_x_1, tangent_2_y_1, offset); // semidiameter from center to border point
     semidiameter_2 = new sLine(circle_1_x, circle_1_y, tangent_3_x_1, tangent_3_y_1, offset); // semidiameter from center to border point
+
+    a = new sLine(0, -5000, 0, 5000, offset);
+    b = new sLine(-5000, 0, 5000, 0, offset);*/
 }
 
 // ---------- drawLines ----------
@@ -164,5 +192,18 @@ void DrawField::drawLines(QPainter *local_qpainter)
 
         semidiameter_1->sdraw(*local_qpainter);
         semidiameter_2->sdraw(*local_qpainter);
+
+        // drawing coordinate axis and letters
+
+        a->sdraw(*local_qpainter);
+        b->sdraw(*local_qpainter);
+        x_arrow_1->sdraw(*local_qpainter);
+        x_arrow_2->sdraw(*local_qpainter);
+        x_letter_1->sdraw(*local_qpainter);
+        x_letter_2->sdraw(*local_qpainter);
+        y_arrow_1->sdraw(*local_qpainter);
+        y_arrow_2->sdraw(*local_qpainter);
+        y_letter_1->sdraw(*local_qpainter);
+        y_letter_2->sdraw(*local_qpainter);
     }
 }

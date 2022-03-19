@@ -167,8 +167,47 @@ void SettingPanel::check_and_start()
     sPoint line41 = sPoint(0, 0, cb);
     sPoint line42 = sPoint(0, 0, cb);
 
-    solve_nonlinear_system(xo1, r1, xo2, r2, &line11, &line12, &line21, &line22, &line31, &line32, &line41, &line42);
+    //solve_nonlinear_system(xo1, r1, xo2, r2, &line11, &line12, &line21, &line22, &line31, &line32, &line41, &line42);
 
+    float r = r1;
+    float x_0 = x01; // center of circle
+    float y_0 = y01; // center of circle
+    float x_1 = x02;
+    float y_1 = y02;
+    float point_1[] = { 0,0 };
+    float point_2[] = { 0,0 };
+    float a = (x_1 - x_0) * (x_1 - x_0) + (y_0 - y_1) * (y_0 - y_1);
+    float b = -2 * ((x_1 - x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + x_0 * (y_0 - y_1) * (y_0 - y_1));
+    float c = (r * r + x_0 * x_1 - x_0 * x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + (y_0 - y_1) * (y_0 - y_1) * (x_0 * x_0 - r * r);
+    float D = b * b - 4 * a * c;
+    //std::cout << D << std::endl;
+    if (D > 0)
+    {
+        point_1[0] = (sqrt(D) - b) / (2 * a);
+        point_1[1] = y_0 - sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
+        point_2[0] = (-sqrt(D) - b) / (2 * a);
+        point_2[1] = y_0 + sqrt(r * r - (point_2[0] - x_0) * (point_2[0] - x_0));
+    }
+    else if (D == 0)
+    {
+        point_1[0] = -b / (2 * a);
+        point_1[1] = y_0 + sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
+        point_2[0] = point_1[0];
+        point_2[1] = y_0 - sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
+    }
+
+    float res[4] = { point_1[0],point_1[1],point_2[0],point_2[1] };
+    line21.setX(point_1[0]);
+    line21.setY(point_1[1]);
+    line22.setX(x02);
+    line22.setY(y02);
+    line31.setX(point_2[0]);
+    line31.setY(point_2[1]);
+    line32.setX(x02);
+    line32.setY(y02);
+
+    //for (float re : res)std::cout << re << std::endl;
+    
     MainWindow *p = (MainWindow*)_par;
 
     (p->getDrawField())->init(x01, y01, r1,
