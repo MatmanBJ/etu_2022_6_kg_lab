@@ -1,42 +1,39 @@
-#include <iostream>
-#include <cmath>
-
-void formulaX(float x_0, float y_0, float x_1, float y_1, float r) {
-    float point_1[] = { 0,0 };
-    float point_2[] = { 0,0 };
-    float a = (x_1 - x_0) * (x_1 - x_0) + (y_0 - y_1) * (y_0 - y_1);
-    float b = -2 * ((x_1 - x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + x_0 * (y_0 - y_1) * (y_0 - y_1));
-    float c = (r * r + x_0 * x_1 - x_0 * x_0) * (r * r + x_0 * x_1 - x_0 * x_0) + (y_0 - y_1) * (y_0 - y_1) * (x_0 * x_0 - r * r);
-    float D = b * b - 4 * a * c;
+void formulaX( float x_0,float y_0,float x_1,float y_1,float r){
+   float point_1[] = {0,0};
+   float point_2[] = {0,0};
+   float a = (x_1 - x_0)*(x_1 - x_0) + (y_0 - y_1)*(y_0 - y_1);
+   float b = -2*((x_1 - x_0)*(r*r + x_0*x_1 - x_0*x_0) + x_0*(y_0 - y_1)*(y_0 - y_1));
+   float c = (r*r + x_0*x_1 - x_0*x_0)*(r*r + x_0*x_1 - x_0*x_0)  + (y_0 - y_1)*(y_0 - y_1)*(x_0*x_0 - r*r);
+   float D = b*b - 4*a*c;
     std::cout << D << std::endl;
-    if (D > 0) {
-        point_1[0] = (sqrt(D) - b) / (2 * a);
-        point_1[1] = y_0 + sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
-        point_2[0] = (-sqrt(D) - b) / (2 * a);
-        point_2[1] = y_0 + sqrt(r * r - (point_2[0] - x_0) * (point_2[0] - x_0));
-    }
-    else if (D == 0) {
-        point_1[0] = -b / (2 * a);
-        point_1[1] = y_0 + sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
-        point_2[0] = point_1[0];
-        point_2[1] = y_0 - sqrt(r * r - (point_1[0] - x_0) * (point_1[0] - x_0));
-    }
+   if(D > 0) {
+       float  y_h,y_l;
+       point_1[0] = (sqrt(D) - b)/(2*a);
+       y_h = y_0 + sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) );
+       y_l = y_0 - sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) );
+       if(((point_1[0] - x_0)*(x_1 - point_1[0]) + (y_h - y_0)*(y_1 - y_h))==0)
+       {
+           point_1[1] = y_h;
+       } else point_1[1] = y_l;
+
+       point_2[0] = (-sqrt(D) - b)/(2*a);
+       y_h = y_0 + sqrt( r*r - (point_2[0] - x_0)*(point_2[0] - x_0) );
+       y_l = y_0 - sqrt( r*r - (point_2[0] - x_0)*(point_2[0] - x_0) );
+       if(((point_2[0] - x_0)*(x_1 - point_2[0]) + (y_h - y_0)*(y_1 - y_h))==0)
+       {
+           point_2[1] = y_h;
+       } else point_2[1] = y_l;
+   }
+   else if(D == 0){
+       point_1[0] = -b/(2*a);
+       point_1[1] = y_0 + sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) );
+       point_2[0] = point_1[0];
+       point_2[1] = y_0 - sqrt( r*r - (point_1[0] - x_0)*(point_1[0] - x_0) );
+   }
 
 
-    float res[4] = { point_1[0],point_1[1],point_2[0],point_2[1] };
+    float res[4] = {point_1[0],point_1[1],point_2[0],point_2[1]};
 
-    for (float re : res)std::cout << re << std::endl;
+    for(float re : res)std::cout << re << std::endl;
 }
 
-
-
-int main() {
-    float x_0, y_0, x_1, y_1, r = 3;
-    x_0 = 3;
-    y_0 = 3;
-    x_1 = 12;
-    y_1 = 3;
-    formulaX(x_0, y_0, x_1, y_1, r);
-    std::cout << "\n end." << std::endl;
-    return 0;
-}
