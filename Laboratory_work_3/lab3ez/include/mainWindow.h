@@ -1,3 +1,5 @@
+// main window class
+
 #ifndef MAINWINDOW_H
 
 #define MAINWINDOW_H

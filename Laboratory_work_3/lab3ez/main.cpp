@@ -7,7 +7,13 @@
 #include "./include/mainWindow.h"
 
 #include "./include/sup.h"
- 
+
+/*
+main (main function) -->
+--> mainWindow (setting window settings) -->
+--> drawField (counting bilinear area & drawing)
+*/
+
 /*
 ./lab3ez p1_x p1_y p1_z p2_x p2_y p2_z p3_x p3_y p3_z p4_x p4_y p4_z
     0     1     2   3    4     5    6   7    8    9    10   11   12

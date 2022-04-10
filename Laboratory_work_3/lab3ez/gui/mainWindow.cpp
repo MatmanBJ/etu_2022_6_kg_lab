@@ -1,3 +1,4 @@
+// main window class -- cpp file
 
 #include <QWidget>
 #include <QPushButton>
@@ -8,7 +9,6 @@
 
 #include "../include/mainWindow.h"
 #include "../include/drawField.h"
-
 
 MainWindow::MainWindow(
       double x1, double y1, double z1, 

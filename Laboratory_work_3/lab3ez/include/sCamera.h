@@ -1,3 +1,5 @@
+// camera class
+
 #ifndef SCAMERA_H
 #define SCAMERA_H
 

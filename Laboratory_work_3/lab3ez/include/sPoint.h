@@ -1,3 +1,5 @@
+// point class
+
 #ifndef SPOINT_H
 #define SPOINT_H
 

@@ -1,3 +1,5 @@
+// draw field class
+
 #ifndef DRAWFIELD_H
 
 #define DRAWFIELD_H

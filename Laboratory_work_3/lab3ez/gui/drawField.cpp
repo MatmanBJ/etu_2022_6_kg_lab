@@ -1,3 +1,5 @@
+// draw field class -- cpp file
+
 #include <QWidget>
 #include <QPainter>
 #include <QKeyEvent>
@@ -22,6 +24,8 @@ DrawField::DrawField(QWidget *parent,
 {
     resize(W, H);
     this->setStyleSheet("background-color: rgb(255,255,255); margin:0px; border:1px solid rgb(255, 0, 0); ");
+
+    // settings (constant numbers) for movveing camera (step is constant)
 
     /*9*Arrow_UP
     9*Arrow_Right
@@ -308,96 +312,6 @@ void DrawField::refresh_display()
     for(size_t li = 0; li < H; ++li)
         for(size_t lj = 0; lj < W; ++lj)
             display[li][lj] = 0;
-}
-
-/*
-
-           +--------+ <--p2
-          /        /|
-         /        / |
-        +--------+  |
-        |        |  |
-        | 4      |  +3     
-        |        | /          z| /y
-        |        |/            |/
- p1--> 1+--------+2            +--x 
-*/
-void DrawField::putParallelepiped(const sPoint p1, const sPoint p2)
-{
-    sPoint A1(p1);
-    sPoint A2(p2.x(), p1.y(), p1.z());
-    sPoint A3(p2.x(), p2.y(), p1.z());
-    sPoint A4(p1.x(), p2.y(), p1.z());
-    sPoint B1(p1.x(), p1.y(), p2.z());
-    sPoint B2(p2.x(), p1.y(), p2.z());
-    sPoint B3(p2);
-    sPoint B4(p1.x(), p2.y(), p2.z());
-    putLine3D(A1, A2); putLine3D(A2, A3); putLine3D(A3, A4); putLine3D(A4, A1);
-    putLine3D(B1, B2); putLine3D(B2, B3); putLine3D(B3, B4); putLine3D(B4, B1);
-    putLine3D(A1, B1); putLine3D(A2, B2); putLine3D(A3, B3); putLine3D(A4, B4);
-}
-
-void DrawField::putSphere(const sPoint c, double r)
-{
-    const double dr = 0.1;
-    putPoint(c.x(), c.y(), c.z());
-
-    // ===================================
-    /*
-    (hor - hor0)^2 + (wer - wer0)^2 = r^2
-    wer = +sqrt(r^2 - (hor - hor0)^2) + y0
-    wer = -sqrt(r^2 - (hor - hor0)^2) + y0
-    */
-    double hor0;
-    double wer0;
-    double plan;
-    // ================Z===================
-    hor0 = c.x();
-    wer0 = c.y();
-    plan = c.z();
-
-    for (double hor = hor0-r; hor <= hor0+r; hor+=dr)
-    {
-        double sq = sqrt(  r*r - (hor - hor0)*(hor - hor0)  );
-
-        double wer1 = sq + wer0;
-        double wer2 = -sq + wer0;
-
-        putPoint(hor, wer1, plan);
-        putPoint(hor, wer2, plan);
-    }
-
-    // ================Y===================
-    hor0 = c.x();
-    wer0 = c.z();
-    plan = c.y();
-
-    for (double hor = hor0-r; hor <= hor0+r; hor+=dr)
-    {
-        double sq = sqrt(  r*r - (hor - hor0)*(hor - hor0)  );
-
-        double wer1 = sq + wer0;
-        double wer2 = -sq + wer0;
-
-        putPoint(hor, plan, wer1);
-        putPoint(hor, plan, wer2);
-    }
-
-    // ================X===================
-    hor0 = c.z();
-    wer0 = c.y();
-    plan = c.x();
-
-    for (double hor = hor0-r; hor <= hor0+r; hor+=dr)
-    {
-        double sq = sqrt(  r*r - (hor - hor0)*(hor - hor0)  );
-
-        double wer1 = sq + wer0;
-        double wer2 = -sq + wer0;
-
-        putPoint(plan, wer1, hor);
-        putPoint(plan, wer2, hor);
-    }
 }
 
 void DrawField::drawBilinearSurface()
