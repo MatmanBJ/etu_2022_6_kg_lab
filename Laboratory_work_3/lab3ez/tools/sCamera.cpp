@@ -7,9 +7,7 @@
 #include "../include/sup.h"
 
 sCamera::sCamera() : O(0.0, 0.0, 0.0), F(0.0, 1.0, 0.0), U(0.0, 0.0, 1.0), R(1.0, 0.0, 0.0)
-{
-    
-}
+{}
 
 sPoint sCamera::o() const
 {

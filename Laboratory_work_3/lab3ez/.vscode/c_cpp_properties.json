@@ -1,12 +1,10 @@
 {
     "configurations": [
         {
-            "name": "AnyName",
+            "name": "Win32",
             "includePath": [
-                "/home/the220th/git/trash/Kr/qttest/6.2.0/gcc_64/include/",
-                "/home/the220th/git/trash/Kr/qttest/6.2.0/gcc_64/include/QtWidgets",
-                "/home/the220th/git/trash/Kr/qttest/6.2.0/gcc_64/include/QtCore",
-                "/home/the220th/git/trash/Kr/qttest/6.2.0/gcc_64/include/QtGui",
+                "C:/Program Files/Qt/6.2.0/mingw81_64/include/**",
+                "${workspaceFolder}/**",
                 "${default}"
             ],
             "defines": [

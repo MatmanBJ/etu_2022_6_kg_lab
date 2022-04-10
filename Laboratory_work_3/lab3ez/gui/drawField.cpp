@@ -15,6 +15,8 @@
 
 using namespace std;
 
+// constructor -- main actions
+
 DrawField::DrawField(QWidget *parent,
       double x1, double y1, double z1, 
       double x2, double y2, double z2, 
@@ -40,26 +42,36 @@ DrawField::DrawField(QWidget *parent,
 
     angleX = 0;
     angleY = 0;
-    M_rotate_refresh();
+    M_rotate_refresh(); // update rotating
     
     C_ = NULL;
-    refresh_C_();
+    refresh_C_(); // update
 
-    display = new int*[H];
+    display = new int*[H]; // screen height
     for(size_t li = 0; li < H; ++li)
-        display[li] = new int[W];
-    refresh_display();
+    {
+        display[li] = new int[W]; // for each high point is with point (it's for output)
+    }
+    refresh_display(); // update display
 }
+
+// destructor
 
 DrawField::~DrawField()
 {
     if(C_ != NULL)
-        delete C_;
+    {    
+        delete C_; // C is matrix
+    }
 
     for(size_t li = 0; li < H; ++li)
+    {
         delete display[li];
+    }
     delete display;
 }
+
+// event painting (first painting & reaction on push button)
  
 void DrawField::paintEvent(QPaintEvent *e)
 {
@@ -67,18 +79,24 @@ void DrawField::paintEvent(QPaintEvent *e)
 
     refresh_display();
 
-    //coord
+    // coordinates lines
     putLine3D(sPoint(0, 0, 0), sPoint(30, 0, 0));
     putLine3D(sPoint(0, 0, 0), sPoint(0, 30, 0));
     putLine3D(sPoint(0, 0, 0), sPoint(0, 0, 30));
 
-    drawBilinearSurface();
+    drawBilinearSurface(); // bilenear surface drawing
 
-    QPainter qp(this);
+    QPainter qp(this); // paint points
     for(size_t li = 0; li < H; ++li)
+    {
         for(size_t lj = 0; lj < W; ++lj)
+        {
             if(display[li][lj] != 0)
-                qp.drawPoint(lj, li);
+            {
+                qp.drawPoint(lj, li); // if display afford it, paint points
+            }
+        }
+    }
 
     /*
     QPainter qp(this);
@@ -88,8 +106,16 @@ void DrawField::paintEvent(QPaintEvent *e)
             cout << display[li][lj];
         cout << endl;
     }*/
-
 }
+
+// pressing buttons events make changes in drawing + refreshing it immediately
+// AWSDQE -- camera turn
+// <up><down><left><right> -- move
+// HUJK -- move relatively coordinate start
+// YI -- up/down move locally
+// C<space> -- up/down relatively coordinate start
+// RT -- rounding relatively OY
+// FG -- rounding relatively OX
 
 void DrawField::keyPressEventFU(QKeyEvent *event)
 {
@@ -193,8 +219,10 @@ void DrawField::keyPressEventFU(QKeyEvent *event)
     }
 
     refresh_C_();
-    update();
+    update(); // event calling???
 }
+
+// drawing point on the working place
 
 void DrawField::putPoint(double x, double y, double z)
 {
@@ -231,19 +259,28 @@ void DrawField::putPoint(double x, double y, double z)
     xp = ((n*x_)/y_);
     zp = ((n*z_)/y_);
 
+    // comparison coordinates for screen drawing
+
     if(xp < -r || xp > r)
+    {
         return;
+    }
     if(zp < -t || zp > t)
+    {
         return;
+    }
     if(y_ > f || y_ < n)
+    {
         return;
+    }
+
+    // result counting
     
     double x_res, y_res;
     x_res = ((xp+r)*(W-1))/(r+r);
     y_res = ((zp+t)*(H-1))/(t+t);
 
     // ==========================================
-
 
     size_t display_x = (size_t)(x_res+0.5);
     size_t display_y = (size_t)(y_res+0.5);
@@ -252,15 +289,19 @@ void DrawField::putPoint(double x, double y, double z)
     return;
 }
 
+// putting line in working place (3d line, but schreen is 2d), for points
+
 void DrawField::putLine3D(const sPoint& b, const sPoint& e)
 {
     putLine3D(b.x(), b.y(), b.z(), e.x(), e.y(), e.z());
 }
 
+// putting line in working place (3d line, but schreen is 2d), for coordinates
+
 void DrawField::putLine3D(double x1, double y1, double z1, double x2, double y2, double z2)
 {
     double x, y, z;
-    for(double _t = 0.0; _t <= 1.0; _t+=0.001)
+    for(double _t = 0.0; _t <= 1.0; _t += 0.001)
     {
         x = (1-_t)*x1 + _t*x2;
         y = (1-_t)*y1 + _t*y2;
@@ -268,6 +309,8 @@ void DrawField::putLine3D(double x1, double y1, double z1, double x2, double y2,
         putPoint(x,y,z);
     }
 }
+
+// updating working place (matrix)
 
 void DrawField::refresh_C_()
 {
@@ -283,9 +326,13 @@ void DrawField::refresh_C_()
     Matrix<double> C_buff = C.inverse();
     
     if(C_ != NULL)
+    {
         delete C_;
+    }
     C_ = new Matrix<double>(C_buff);
 }
+
+// updating working place (rotating the image, degree matrix)
 
 void DrawField::M_rotate_refresh()
 {
@@ -304,34 +351,43 @@ void DrawField::M_rotate_refresh()
     M_rotate.set(buff.get(0, 0), 0, 0); M_rotate.set(buff.get(0, 1), 0, 1); M_rotate.set(buff.get(0, 2), 0, 2);
     M_rotate.set(buff.get(1, 0), 1, 0); M_rotate.set(buff.get(1, 1), 1, 1); M_rotate.set(buff.get(1, 2), 1, 2);
     M_rotate.set(buff.get(2, 0), 2, 0); M_rotate.set(buff.get(2, 1), 2, 1); M_rotate.set(buff.get(2, 2), 2, 2);
-
 }
+
+// updating working place
 
 void DrawField::refresh_display()
 {
     for(size_t li = 0; li < H; ++li)
+    {
         for(size_t lj = 0; lj < W; ++lj)
+        {
             display[li][lj] = 0;
+        }
+    }
 }
+
+// bilinear surface drawing function 1 (drawing the surface)
 
 void DrawField::drawBilinearSurface()
 {
     double u, w;
 
     for(w = 0; w <= 1.0; w+=0.1)
-        for(u = 0; u <= 1.0; u+=0.001)
+        for(u = 0; u <= 1.0; u += 0.001)
         {
             sPoint buffP = calBilinearSurface(u, w);
             putPoint(buffP.x(), buffP.y(), buffP.z());
         }
     
-    for(u = 0; u <= 1.0; u+=0.1)
-        for(w = 0; w <= 1.0; w+=0.001)
+    for(u = 0; u <= 1.0; u += 0.1)
+        for(w = 0; w <= 1.0; w += 0.001)
         {
             sPoint buffP = calBilinearSurface(u, w);
             putPoint(buffP.x(), buffP.y(), buffP.z());
         }
 }
+
+// bilinear surface drawing function 2 (counting the surface)
 
 sPoint DrawField::calBilinearSurface(double u, double w)
 {
