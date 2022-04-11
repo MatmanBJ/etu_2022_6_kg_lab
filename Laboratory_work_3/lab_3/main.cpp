@@ -15,14 +15,14 @@ main (main function) -->
 */
 
 /*
-./lab3ez p1_x p1_y p1_z p2_x p2_y p2_z p3_x p3_y p3_z p4_x p4_y p4_z
+./lab_3 p1_x p1_y p1_z p2_x p2_y p2_z p3_x p3_y p3_z p4_x p4_y p4_z
     0     1     2   3    4     5    6   7    8    9    10   11   12
 */
 int main(int argc, char *argv[])
 {
     if(argc != 13)
     {
-        std::cout << "Syntax error. Expected: \"./lab3ez p1_x p1_y p1_z p2_x p2_y p2_z p3_x p3_y p3_z p4_x p4_y p4_z\"" << std::endl;
+        std::cout << "Syntax error. Expected: \"./lab_3 p1_x p1_y p1_z p2_x p2_y p2_z p3_x p3_y p3_z p4_x p4_y p4_z\"" << std::endl;
         return -1;
     }
 
@@ -37,9 +37,9 @@ int main(int argc, char *argv[])
         atof(argv[10]), atof(argv[11]), atof(argv[12])
     );
 
-    window.setWindowTitle("lab3ez");
+    window.setWindowTitle("lab_3");
     window.resize(1280, 720);
-    window.setWindowIcon(QIcon("./imgsrc/ico.png"));
+    //window.setWindowIcon(QIcon("./imgsrc/ico.png"));
 
     window.show();
 
