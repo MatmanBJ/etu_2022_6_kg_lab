@@ -3,10 +3,10 @@ QT += core gui
 QT += widgets
 
 CONFIG += c++11
-TARGET = lab3ez
+QMAKE_LFLAGS += -static -static-pie
+TARGET = lab_3
 TEMPLATE = app
-
-#QMAKE_CXXFLAGS = -ggdb
+RC_FILE = lab_3.rc
 
 SOURCES += ./main.cpp \
 ./gui/mainWindow.cpp ./gui/drawField.cpp \
