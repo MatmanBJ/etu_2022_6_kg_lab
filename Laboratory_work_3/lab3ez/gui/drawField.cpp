@@ -397,7 +397,7 @@ sPoint DrawField::calBilinearSurface(double u, double w)
     Matrix<double> vold3(3, 1);
     Matrix<double> vold4(3, 1);
 
-    vold1.set(p1.x(), 0, 0); vold2.set(p2.x(), 0, 0); vold3.set(p3.x(), 0, 0); vold4.set(p4.x(), 1, 0);
+    vold1.set(p1.x(), 0, 0); vold2.set(p2.x(), 0, 0); vold3.set(p3.x(), 0, 0); vold4.set(p4.x(), 0, 0);
     vold1.set(p1.y(), 1, 0); vold2.set(p2.y(), 1, 0); vold3.set(p3.y(), 1, 0); vold4.set(p4.y(), 1, 0);
     vold1.set(p1.z(), 2, 0); vold2.set(p2.z(), 2, 0); vold3.set(p3.z(), 2, 0); vold4.set(p4.z(), 2, 0);
 
